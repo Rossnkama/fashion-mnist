@@ -51,7 +51,7 @@ print("Test accuracy: {}".format(test_accuracy))
 
 """
     Test accuracy was lower than training accuracy suggesting possible over-fitting.
-        - Decrease test size of train in (train:test) ratio to fix this. 
+        - Decrease size of train in (train:test) ratio to fix this. 
 """
 
 # Making predictions
@@ -79,3 +79,21 @@ for i in range(25):
         color=color
     )
 plt.show()
+
+# Single image prediction
+image = test_images[0]
+print(image.shape)  # (28 x 28)
+
+# Expanding dimensions (un-squeezing at dim[0]) to make a fake batch
+# tf.keras expects batches for predictions
+image = (np.expand_dims(image, 0))
+print(image.shape)  # (1 x 28 x 28)
+
+predictions = model.predict(image)
+print(predictions)  # [[1.6108593e-06 3.4841494e-09 3.6127172e-08 1.5056756e-10 9.1969681e-01... ]]
+
+# Look at the shape of predictions: (1 x n)
+predictions = predictions[0]
+
+# Predicting the correct label belonging to an image
+np.argmax(predictions)  # E.g. 9
