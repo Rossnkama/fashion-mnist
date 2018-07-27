@@ -27,8 +27,8 @@ plt.show()
 """
 
 # Feature scaling as largest scaling ranges from 0 (black) - 255 (white)
-train_images = train_images / 255
-test_images = test_images / 255
+train_images = train_images / 255.
+test_images = test_images / 255.
 
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(28, 28)),
@@ -39,5 +39,17 @@ model = keras.Sequential([
 model.compile(
     optimizer=tf.train.AdamOptimizer(),
     loss='sparse_categorical_crossentropy',
-    metrics=['accuracy'] # Percentage of images correctly classified 
+    metrics=['accuracy']  # Percentage of images correctly classified
 )
+
+# Training the model
+model.fit(train_images, train_labels, epochs=5)  # Starts training
+
+# Accuracy evaluation
+test_loss, test_accuracy = model.evaluate(test_images, test_labels)
+print("Test accuracy: {}".format(test_accuracy))
+
+"""
+    Test accuracy was lower than training accuracy suggesting possible over-fitting.
+        - Experiment with (train:test) ratio to fix this. 
+"""
