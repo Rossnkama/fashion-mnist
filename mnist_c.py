@@ -51,5 +51,31 @@ print("Test accuracy: {}".format(test_accuracy))
 
 """
     Test accuracy was lower than training accuracy suggesting possible over-fitting.
-        - Experiment with (train:test) ratio to fix this. 
+        - Decrease test size of train in (train:test) ratio to fix this. 
 """
+
+# Making predictions
+predictions = model.predict(test_images)
+
+# Plot the first 25 test images, their predicted label, and the true label
+# Color correct predictions in green, incorrect predictions in red
+plt.figure(figsize=(10, 10))
+for i in range(25):
+    plt.subplot(5, 5, i+1)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid('off')
+    plt.imshow(test_images[i], cmap=plt.cm.binary)
+    predicted_label = np.argmax(predictions[i])
+    true_label = test_labels[i]
+    if predicted_label == true_label:
+        color = 'green'
+    else:
+        color = 'red'
+
+    plt.xlabel("{} ({})".format(
+        class_names[predicted_label],
+        class_names[true_label]),
+        color=color
+    )
+plt.show()
